@@ -4,7 +4,7 @@ namespace GP.SS.Database
 {
     public class SaldeoSynchronizatorContext : DbContext, ISaldeoSynchronizatorContext
     {
-        protected SaldeoSynchronizatorContext(DbContextOptions<SaldeoSynchronizatorContext> options)
+        public SaldeoSynchronizatorContext(DbContextOptions<SaldeoSynchronizatorContext> options)
             : base(options)
         {
         }
