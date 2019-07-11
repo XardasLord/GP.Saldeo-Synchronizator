@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devart.Data.Oracle.EFCore" Version="9.7.790" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.19.0-beta4" />
   </ItemGroup>
 
 </Project>
