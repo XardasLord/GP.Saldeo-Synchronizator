@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GP.SS.Business\GP.SS.Business.csproj" />
     <ProjectReference Include="..\GP.SS.Database\GP.SS.Database.csproj" />
+    <ProjectReference Include="..\GP.SS.Infrastructure\GP.SS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
