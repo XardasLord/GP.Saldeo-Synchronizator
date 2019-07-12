@@ -1,7 +1,9 @@
 ﻿using GP.SS.Business;
-using GP.SS.Common;
 using GP.SS.Database;
 using GP.SS.Infrastructure;
+using GP.SS.Infrastructure.SaldeoSmart;
+using GP.SS.Infrastructure.SaldeoSmart.Configuration;
+using GP.SS.Infrastructure.SaldeoSmart.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +32,9 @@ namespace GP.SS.Api
 
             services.AddTransient<ISynchronizationService, SynchronizationService>();
             services.AddTransient<ISaldeoSmartFacade, SaldeoSmartFacade>();
-
-            services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
+            services.AddTransient<ISaldeoSmartAuthorizationHelper, SaldeoSmartAuthorizationHelper>();
+			
+			services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

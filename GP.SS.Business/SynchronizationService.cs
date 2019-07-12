@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using GP.SS.Infrastructure;
+using GP.SS.Infrastructure.SaldeoSmart;
 
 namespace GP.SS.Business
 {

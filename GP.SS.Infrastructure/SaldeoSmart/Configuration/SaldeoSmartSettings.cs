@@ -1,4 +1,4 @@
-﻿namespace GP.SS.Common
+﻿namespace GP.SS.Infrastructure.SaldeoSmart.Configuration
 {
 	public class SaldeoSmartSettings
 	{
