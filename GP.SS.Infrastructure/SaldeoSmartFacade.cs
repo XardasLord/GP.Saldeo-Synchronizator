@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GP.SS.Common;
@@ -8,62 +10,76 @@ using RestSharp.Extensions;
 
 namespace GP.SS.Infrastructure
 {
-    public class SaldeoSmartFacade : ISaldeoSmartFacade
-    {
-        private readonly IOptions<SaldeoSmartSettings> _saldeoSmartSettings;
+	public class SaldeoSmartFacade : ISaldeoSmartFacade
+	{
+		private readonly IOptions<SaldeoSmartSettings> _saldeoSmartSettings;
 
-        public SaldeoSmartFacade(IOptions<SaldeoSmartSettings> saldeoSmartSettings)
-        {
-            _saldeoSmartSettings = saldeoSmartSettings;
-        }
+		public SaldeoSmartFacade(IOptions<SaldeoSmartSettings> saldeoSmartSettings)
+		{
+			_saldeoSmartSettings = saldeoSmartSettings;
+		}
 
-        public async Task<object> GetContractors()
-        {
-            var client = new RestClient(_saldeoSmartSettings.Value.ApiUrl);
-            var request = new RestRequest(_saldeoSmartSettings.Value.GetContractorsResource, Method.GET);
+		public async Task<object> GetContractors()
+		{
+			var client = new RestClient(_saldeoSmartSettings.Value.ApiUrl);
+			var request = new RestRequest(_saldeoSmartSettings.Value.GetContractorsResource, Method.GET);
 
-            var requestId = Guid.NewGuid().ToString();
-            var signatureHash = GenerateRequestSignatureHash(_saldeoSmartSettings.Value.Username, requestId);
+			var requestId = Guid.NewGuid().ToString();
+			var companyId = "SYMFONIA::ASPODATK";
+			var parameters = new Dictionary<string, string>
+			{
+				{ "username", _saldeoSmartSettings.Value.Username },
+				{ "req_id", requestId },
+				{ "company_program_id", companyId }
+			};
+			var signatureHash = GenerateRequestSignatureHash(parameters, _saldeoSmartSettings.Value.ApiKey);
 
-            request.AddParameter("username", _saldeoSmartSettings.Value.Username);
-            request.AddParameter("req_id", requestId);
-            request.AddParameter("req_sig", signatureHash);
+			request.AddParameter("company_program_id", companyId);
+			request.AddParameter("req_id", requestId);
+			request.AddParameter("username", _saldeoSmartSettings.Value.Username);
+			request.AddParameter("req_sig", signatureHash);
 
-            var response = await client.ExecuteTaskAsync(request);
+			var response = await client.ExecuteTaskAsync(request);
 
-            throw new System.NotImplementedException();
-        }
+			throw new System.NotImplementedException();
+		}
 
-        private string GenerateRequestSignatureHash(string username, string requestId)
-        {
-	        var sb = new StringBuilder();
+		private string GenerateRequestSignatureHash(IDictionary<string, string> parameters, string apiKey)
+		{
+			var sb = new StringBuilder();
 
-	        sb.Append("username").Append("=").Append(username);
-	        sb.Append("req_id").Append("=").Append(requestId);
+			foreach (var parameter in parameters.OrderBy(key => key.Key))
+			{
+				sb.Append(parameter.Key).Append("=").Append(parameter.Value);
+			}
 
-	        var baseSignature = sb.ToString();
+			var baseSignature = sb.ToString();
 
-	        baseSignature = baseSignature.UrlEncode(Encoding.UTF8);
+			baseSignature = baseSignature
+				.Replace("=", "%3D")
+				.Replace(":", "%3A");
 
-	        var calculatedSignatureHash = CalculateMD5Hash(baseSignature);
+			baseSignature = baseSignature + apiKey;
 
-	        return calculatedSignatureHash;
-        }
+			var calculatedSignatureHash = CalculateMD5Hash(baseSignature);
 
-        private string CalculateMD5Hash(string input)
-        {
-	        // step 1, calculate MD5 hash from input
-	        var md5 = System.Security.Cryptography.MD5.Create();
-	        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-	        byte[] hash = md5.ComputeHash(inputBytes);
+			return calculatedSignatureHash;
+		}
 
-	        // step 2, convert byte array to hex string
-	        StringBuilder sb = new StringBuilder();
-	        for (int i = 0; i < hash.Length; i++)
-	        {
-		        sb.Append(hash[i].ToString("X2"));
-	        }
-	        return sb.ToString();
-        }
+		private string CalculateMD5Hash(string input)
+		{
+			// step 1, calculate MD5 hash from input
+			var md5 = System.Security.Cryptography.MD5.Create();
+			byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+			byte[] hash = md5.ComputeHash(inputBytes);
+
+			// step 2, convert byte array to hex string
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < hash.Length; i++)
+			{
+				sb.Append(hash[i].ToString("X2"));
+			}
+			return sb.ToString();
+		}
 	}
 }
