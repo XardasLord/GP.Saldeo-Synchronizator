@@ -6,5 +6,6 @@
 		public string ApiKey { get; set; }
 		public string Username { get; set; }
 		public string GetContractorsResource { get; set; }
+		public string GetCompaniesResource { get; set; }
 	}
 }

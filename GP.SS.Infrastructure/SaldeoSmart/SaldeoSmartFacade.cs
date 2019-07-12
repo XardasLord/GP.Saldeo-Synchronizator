@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using GP.SS.Infrastructure.SaldeoSmart.Configuration;
 using GP.SS.Infrastructure.SaldeoSmart.Helpers;
+using GP.SS.Infrastructure.SaldeoSmart.ResponseModels;
 using Microsoft.Extensions.Options;
 using RestSharp;
+using RestSharp.Serialization.Xml;
 
 namespace GP.SS.Infrastructure.SaldeoSmart
 {
@@ -21,9 +22,27 @@ namespace GP.SS.Infrastructure.SaldeoSmart
 			_saldeoSmartAuthorizationHelper = saldeoSmartAuthorizationHelper;
 		}
 
-		public Task<object> GetCompanies()
+		public async Task<object> GetCompanies()
 		{
-			throw new NotImplementedException();
+			var client = new RestClient(_saldeoSmartSettings.Value.ApiUrl);
+			var request = new RestRequest(_saldeoSmartSettings.Value.GetCompaniesResource, Method.GET);
+
+			var requestId = Guid.NewGuid().ToString();
+			var parameters = new Dictionary<string, string>
+			{
+				{ "username", _saldeoSmartSettings.Value.Username },
+				{ "req_id", requestId }
+			};
+			var signatureHash = _saldeoSmartAuthorizationHelper.GenerateRequestSignatureHash(parameters, _saldeoSmartSettings.Value.ApiKey);
+
+			request.AddParameter("req_id", requestId);
+			request.AddParameter("username", _saldeoSmartSettings.Value.Username);
+			request.AddParameter("req_sig", signatureHash);
+			client.UseDotNetXmlSerializer();
+
+			var response = await client.ExecuteTaskAsync<CompaniesResponse>(request);
+
+			throw new System.NotImplementedException();
 		}
 
 		public async Task<object> GetContractors()

@@ -3,7 +3,8 @@
 namespace GP.SS.Business
 {
     public interface ISynchronizationService
-    {
-        Task SyncContractorsFromSaldeo();
+	{
+		Task SyncCompaniesFromSaldeo();
+		Task SyncContractorsFromSaldeo();
     }
 }
