@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GP.SS.Business;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GP.SS.Api.Controllers
@@ -10,10 +11,18 @@ namespace GP.SS.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+	    private readonly ISynchronizationService _synchronizationService;
+
+	    public ValuesController(ISynchronizationService synchronizationService)
+	    {
+		    _synchronizationService = synchronizationService;
+	    }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
+	        await _synchronizationService.SyncContractorsFromSaldeo();
             return new string[] { "value1", "value2" };
         }
 
