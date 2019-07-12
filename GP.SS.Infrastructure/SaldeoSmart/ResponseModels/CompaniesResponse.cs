@@ -6,52 +6,52 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 	public class CompaniesResponse
 	{
 		[XmlElement("STATUS")]
-		public string STATUS { get; set; }
+		public string Status { get; set; }
 
 		[XmlElement("COMPANIES")]
-		public COMPANIES COMPANIES { get; set; }
+		public Companies Companies { get; set; }
 	}
 
-	public class COMPANIES
+	public class Companies
 	{
 		[XmlElement("COMPANY")]
-		public COMPANY[] COMPANY { get; set; }
+		public Company[] Company { get; set; }
 	}
 
-	public class COMPANY
+	public class Company
 	{
-		[XmlElement("COMPANY_PROGRAM_ID")]
-		public string COMPANY_PROGRAM_ID { get; set; }
+	    [XmlElement("COMPANY_PROGRAM_ID")]
+		public string CompanyProgramId { get; set; }
 
 		[XmlElement("COMPANY_ID")]
-		public string COMPANY_ID { get; set; }
+		public string CompanyId { get; set; }
 
 		[XmlElement("EMAIL")]
-		public string EMAIL { get; set; }
+		public string Email { get; set; }
 
 		[XmlElement("USERNAME")]
-		public string USERNAME { get; set; }
+		public string Username { get; set; }
 
 		[XmlElement("SHORT_NAME")]
-		public string SHORT_NAME { get; set; }
+		public string ShortName { get; set; }
 
 		[XmlElement("FULL_NAME")]
-		public string FULL_NAME { get; set; }
+		public string FullName { get; set; }
 
 		[XmlElement("VAT_NUMBER")]
-		public string VAT_NUMBER { get; set; }
+		public string VatNumber { get; set; }
 
 		[XmlElement("CITY")]
-		public string CITY { get; set; }
+		public string City { get; set; }
 
 		[XmlElement("POSTCODE")]
-		public string POSTCODE { get; set; }
+		public string Postcode { get; set; }
 
 		[XmlElement("STREET")]
-		public string STREET { get; set; }
+		public string Street { get; set; }
 
 		[XmlElement("TELEPHONE")]
-		public string TELEPHONE { get; set; }
+		public string Telephone { get; set; }
 	}
 
 }
