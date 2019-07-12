@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GP.SS.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace GP.SS.Database
 {
@@ -16,5 +17,7 @@ namespace GP.SS.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
+
+        public DbSet<Company> Companies { get; set; }
     }
 }

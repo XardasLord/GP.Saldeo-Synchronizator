@@ -8,4 +8,8 @@
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.19.0-beta4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GP.SS.Domain\GP.SS.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
