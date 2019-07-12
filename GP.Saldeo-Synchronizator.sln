@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GP.SS.Business", "GP.SS.Bus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GP.SS.Infrastructure", "GP.SS.Infrastructure\GP.SS.Infrastructure.csproj", "{9C063639-5552-47F8-82A6-B8B796B58A2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GP.SS.Common", "GP.SS.Common\GP.SS.Common.csproj", "{C5F79F55-5127-4750-86E8-9F6AC91C05F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9C063639-5552-47F8-82A6-B8B796B58A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C063639-5552-47F8-82A6-B8B796B58A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C063639-5552-47F8-82A6-B8B796B58A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F79F55-5127-4750-86E8-9F6AC91C05F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F79F55-5127-4750-86E8-9F6AC91C05F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F79F55-5127-4750-86E8-9F6AC91C05F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F79F55-5127-4750-86E8-9F6AC91C05F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

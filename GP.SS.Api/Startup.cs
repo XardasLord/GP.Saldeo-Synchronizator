@@ -1,4 +1,7 @@
-﻿using GP.SS.Business;
+﻿using System.Reflection;
+using AutoMapper;
+using GP.SS.Api.Mappings;
+using GP.SS.Business;
 using GP.SS.Database;
 using GP.SS.Infrastructure;
 using GP.SS.Infrastructure.SaldeoSmart;
@@ -35,6 +38,8 @@ namespace GP.SS.Api
             services.AddTransient<ISaldeoSmartAuthorizationHelper, SaldeoSmartAuthorizationHelper>();
 			
 			services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
+
+            services.AddAutoMapper(typeof(BusinessMappers).GetTypeInfo().Assembly);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

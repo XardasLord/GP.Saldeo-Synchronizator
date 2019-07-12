@@ -1,4 +1,5 @@
-﻿using GP.SS.Domain;
+﻿using System.Threading.Tasks;
+using GP.SS.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace GP.SS.Database
@@ -16,6 +17,11 @@ namespace GP.SS.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
         }
 
         public DbSet<Company> Companies { get; set; }

@@ -20,11 +20,11 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
 	public class Company
 	{
-	    [XmlElement("COMPANY_PROGRAM_ID")]
-		public string CompanyProgramId { get; set; }
+	    [XmlElement("COMPANY_ID")]
+	    public string Id { get; set; }
 
-		[XmlElement("COMPANY_ID")]
-		public string CompanyId { get; set; }
+        [XmlElement("COMPANY_PROGRAM_ID")]
+		public string CompanyProgramId { get; set; }
 
 		[XmlElement("EMAIL")]
 		public string Email { get; set; }

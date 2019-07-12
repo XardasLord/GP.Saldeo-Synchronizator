@@ -1,29 +1,47 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using GP.SS.Database;
+using GP.SS.Domain;
 using GP.SS.Infrastructure.SaldeoSmart;
 
 namespace GP.SS.Business
 {
-	public class SynchronizationService : ISynchronizationService
-	{
-		private readonly ISaldeoSmartFacade _saldeoSmartFacade;
+    public class SynchronizationService : ISynchronizationService
+    {
+        private readonly ISaldeoSmartFacade _saldeoSmartFacade;
+        private readonly IMapper _mapper;
+        private readonly ISaldeoSynchronizatorContext _context;
 
-		public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade)
-		{
-			_saldeoSmartFacade = saldeoSmartFacade;
-		}
+        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, IMapper mapper, ISaldeoSynchronizatorContext context)
+        {
+            _saldeoSmartFacade = saldeoSmartFacade;
+            _mapper = mapper;
+            _context = context;
+        }
 
-		public async Task SyncCompaniesFromSaldeo()
-		{
-			var companies = await _saldeoSmartFacade.GetCompanies();
+        public async Task SyncCompaniesFromSaldeo()
+        {
+            var result = await _saldeoSmartFacade.GetCompanies();
 
-			// TODO: Update DB
-		}
+            if (!result.Success)
+            {
+                throw new Exception($"Get companies from Saldeo failed - {result.ErrorDescription}");
+            }
 
-		public async Task SyncContractorsFromSaldeo()
-		{
-			var contractors = await _saldeoSmartFacade.GetContractors();
+            var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
 
-			// TODO: Update DB
-		}
-	}
+            // TODO: Add or Update
+            _context.Companies.AddRange(entityCompanies);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SyncContractorsFromSaldeo()
+        {
+            var contractors = await _saldeoSmartFacade.GetContractors();
+
+            // TODO: Update DB
+        }
+    }
 }
