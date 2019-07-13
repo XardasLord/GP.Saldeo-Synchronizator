@@ -5,6 +5,7 @@ using AutoMapper;
 using GP.SS.Database;
 using GP.SS.Domain;
 using GP.SS.Infrastructure.SaldeoSmart;
+using Microsoft.EntityFrameworkCore;
 
 namespace GP.SS.Business
 {
@@ -32,8 +33,16 @@ namespace GP.SS.Business
 
             var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
 
-            // TODO: Add or Update
-            _context.Companies.AddRange(entityCompanies);
+            foreach (var company in entityCompanies)
+            {
+                if (await _context.Companies.AnyAsync(x => x.Id == company.Id))
+                {
+                    continue;
+                }
+
+                _context.Companies.Add(company);
+            }
+
             await _context.SaveChangesAsync();
         }
 
