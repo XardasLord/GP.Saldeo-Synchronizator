@@ -1,12 +1,16 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using AutoMapper;
 using GP.SS.Api.Mappings;
 using GP.SS.Business;
 using GP.SS.Database;
-using GP.SS.Infrastructure;
 using GP.SS.Infrastructure.SaldeoSmart;
 using GP.SS.Infrastructure.SaldeoSmart.Configuration;
 using GP.SS.Infrastructure.SaldeoSmart.Helpers;
+using Hangfire;
+using Hangfire.Console;
+using Hangfire.Dashboard;
+using Hangfire.Oracle.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,10 +40,16 @@ namespace GP.SS.Api
             services.AddTransient<ISynchronizationService, SynchronizationService>();
             services.AddTransient<ISaldeoSmartFacade, SaldeoSmartFacade>();
             services.AddTransient<ISaldeoSmartAuthorizationHelper, SaldeoSmartAuthorizationHelper>();
-			
-			services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
+
+            services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
 
             services.AddAutoMapper(typeof(BusinessMappers).GetTypeInfo().Assembly);
+
+            //services.AddHangfire(config =>
+            //{
+            //    config.UseStorage(new OracleStorage(Configuration.GetConnectionString("SaldeoSynchronizatorDB")));
+            //    config.UseConsole();
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -56,6 +66,12 @@ namespace GP.SS.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //app.UseHangfireServer();
+            //app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            //{
+            //    Authorization = new List<IDashboardAuthorizationFilter>()
+            //});
 
             app.UseHttpsRedirection();
             app.UseMvc();
