@@ -92,6 +92,9 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         [XmlElement("CUSTOMER")]
         public string IsCustomer { get; set; }
 
+        [XmlElement("VAT_NUMBER")]
+        public string VatNumber { get; set; }
+
         [XmlElement("CITY")]
         public string City { get; set; }
 
@@ -100,6 +103,9 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
         [XmlElement("STREET")]
         public string Street { get; set; }
+
+        [XmlElement("TELEPHONE")]
+        public string Telephone { get; set; }
 
         [XmlElement("COUNTRY_ISO3166A2")]
         public string CountryIso3166A2 { get; set; }
@@ -165,16 +171,16 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         public string Source { get; set; }
 
         [XmlElement("DIMENSIONS")]
-        public DIMENSIONS1 Dimensions { get; set; }
+        public Dimensions1 Dimensions { get; set; }
 
         [XmlElement("SALDEO_SYNC_DOCUMENTS")]
-        public SALDEO_SYNC_DOCUMENTS SaldeoSyncDocuments { get; set; }
+        public SaldeoSyncDocuments SaldeoSyncDocuments { get; set; }
 
         [XmlElement("ATTACHMENTS")]
-        public ATTACHMENTS Attachments { get; set; }
+        public Attachments Attachments { get; set; }
 
         [XmlElement("DOCUMENT_ITEMS")]
-        public DOCUMENT_ITEMS DocumentItems { get; set; }
+        public DocumentItems DocumentItems { get; set; }
 
         [XmlElement("SEND_BY_USER")]
         public string SendByUser { get; set; }
@@ -183,10 +189,10 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         public string IsDocumentPaid { get; set; }
 
         [XmlElement("DOCUMENT_PAYMENTS")]
-        public DOCUMENT_PAYMENTS DocumentPayments { get; set; }
+        public DocumentPayments DocumentPayments { get; set; }
 
-        [XmlElement("IS_DOCUMENT_BELONG_TO_COMPAN")]
-        public string IsDocumentBelongToCompan { get; set; }
+        [XmlElement("IS_DOCUMENT_BELONG_TO_COMPANY")]
+        public string IsDocumentBelongToCompany { get; set; }
     }
 
     public class DocumentType
@@ -258,89 +264,147 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         public string Vat { get; set; }
 
         [XmlElement("DIMENSIONS")]
-        public DIMENSIONS Dimensions { get; set; }
+        public Dimensions Dimensions { get; set; }
     }
 
-    public class DIMENSIONS
+    public class Dimensions
     {
-        public object DIMENSION { get; set; }
+        [XmlElement("DIMENSION")] // TODO: ARRAY ?
+        public object Dimension { get; set; }
     }
 
-    public class DIMENSIONS1
+    public class Dimensions1
     {
-        public DIMENSION[] DIMENSION { get; set; }
+        [XmlElement("DIMENSION")]
+        public Dimension[] Dimension { get; set; }
     }
 
-    public class DIMENSION
+    public class Dimension
     {
-        public string CODE { get; set; }
-        public string NAME { get; set; }
-        public string TYPE { get; set; }
-        public string ADDITIONAL_CODE { get; set; }
-        public DIMENSION_VALUES DIMENSION_VALUES { get; set; }
+        [XmlElement("CODE")]
+        public string Code { get; set; }
+
+        [XmlElement("NAME")]
+        public string Name { get; set; }
+
+        [XmlElement("TYPE")]
+        public string Type { get; set; }
+
+        [XmlElement("ADDITIONAL_CODE")]
+        public string AdditionalCode { get; set; }
+
+        [XmlElement("DIMENSION_VALUES")]
+        public DimensionValues DimensionValues { get; set; }
     }
 
-    public class DIMENSION_VALUES
+    public class DimensionValues
     {
-        public object DIMENSION_VALUE { get; set; }
+        [XmlElement("DIMENSION_VALUE")] // TODO: ARRAY ?
+        public object DimensionValue { get; set; }
     }
 
-    public class SALDEO_SYNC_DOCUMENTS
+    public class SaldeoSyncDocuments
     {
-        public SALDEO_SYNC_DOCUMENT SALDEO_SYNC_DOCUMENT { get; set; }
+        [XmlElement("SALDEO_SYNC_DOCUMENT")]
+        public SaldeoSyncDocument[] SaldeoSyncDocumentList { get; set; }
     }
 
-    public class SALDEO_SYNC_DOCUMENT
+    public class SaldeoSyncDocument
     {
-        public string ID { get; set; }
-        public string GUID { get; set; }
-        public string DESCRIPTION { get; set; }
-        public string NUMBERING_TYPE { get; set; }
-        public string ACCOUNT_DOCUMENT_NUMBER { get; set; }
-        public string DOCUMENT_STATUS { get; set; }
+        [XmlElement("ID")]
+        public string Id { get; set; }
+
+        [XmlElement("GUID")]
+        public string Guid { get; set; }
+
+        [XmlElement("DESCRIPTION")]
+        public string Description { get; set; }
+
+        [XmlElement("NUMBERING_TYPE")]
+        public string NumberingType { get; set; }
+
+        [XmlElement("ACCOUNT_DOCUMENT_NUMBER")]
+        public string AccountDocumentNumber { get; set; }
+
+        [XmlElement("DOCUMENT_STATUS")]
+        public string DocumentStatus { get; set; }
     }
 
-    public class ATTACHMENTS
+    public class Attachments
     {
-        public ATTACHMENT[] ATTACHMENT { get; set; }
+        [XmlElement("ATTACHMENT")]
+        public Attachment[] AttachmentsList { get; set; }
     }
 
-    public class ATTACHMENT
+    public class Attachment
     {
-        public string ATTACHMENT_ID { get; set; }
-        public string CREATE_DATE { get; set; }
-        public string DESCRIPTION { get; set; }
-        public string FILENAME { get; set; }
-        public string SOURCE { get; set; }
+        [XmlElement("ATTACHMENT_ID")]
+        public string AttachmentId { get; set; }
+
+        [XmlElement("CREATE_DATE")]
+        public string CreateDate { get; set; }
+
+        [XmlElement("DESCRIPTION")]
+        public string Description { get; set; }
+
+        [XmlElement("FILENAME")]
+        public string Filename { get; set; }
+
+        [XmlElement("SOURCE")]
+        public string Source { get; set; }
     }
 
-    public class DOCUMENT_ITEMS
+    public class DocumentItems
     {
-        public DOCUMENT_ITEM[] DOCUMENT_ITEM { get; set; }
+        [XmlElement("DOCUMENT_ITEM")]
+        public DocumentItem[] DocumentItem { get; set; }
     }
 
-    public class DOCUMENT_ITEM
+    public class DocumentItem
     {
-        public string ARTICLE_ID { get; set; }
-        public string CODE { get; set; }
-        public string NAME { get; set; }
-        public string AMOUNT { get; set; }
-        public string UNIT { get; set; }
-        public string RATE { get; set; }
-        public string UNIT_VALUE { get; set; }
-        public string NETTO { get; set; }
-        public string VAT { get; set; }
-        public string GROSS { get; set; }
+        [XmlElement("ARTICLE_ID")]
+        public string ArticleId { get; set; }
+
+        [XmlElement("CODE")]
+        public string Code { get; set; }
+
+        [XmlElement("NAME")]
+        public string Name { get; set; }
+
+        [XmlElement("AMOUNT")]
+        public string Amount { get; set; }
+
+        [XmlElement("UNIT")]
+        public string Unit { get; set; }
+
+        [XmlElement("RATE")]
+        public string Rate { get; set; }
+
+        [XmlElement("UNIT_VALUE")]
+        public string UnitValue { get; set; }
+
+        [XmlElement("NETTO")]
+        public string Netto { get; set; }
+
+        [XmlElement("VAT")]
+        public string Vat { get; set; }
+
+        [XmlElement("GROSS")]
+        public string Gross { get; set; }
     }
 
-    public class DOCUMENT_PAYMENTS
+    public class DocumentPayments
     {
-        public DOCUMENT_PAYMENT[] DOCUMENT_PAYMENT { get; set; }
+        [XmlElement("DOCUMENT_PAYMENT")]
+        public DocumentPayment[] DocumentPaymentList { get; set; }
     }
 
-    public class DOCUMENT_PAYMENT
+    public class DocumentPayment
     {
-        public string PAYMENT_DATE { get; set; }
-        public string PAYMENT_AMOUNT { get; set; }
+        [XmlElement("PAYMENT_DATE")]
+        public string PaymentDate { get; set; }
+
+        [XmlElement("PAYMENT_AMOUNT")]
+        public string PaymentAmount { get; set; }
     }
 }
