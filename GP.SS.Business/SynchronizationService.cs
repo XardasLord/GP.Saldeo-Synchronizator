@@ -48,9 +48,14 @@ namespace GP.SS.Business
 
         public async Task SyncContractorsFromSaldeo()
         {
-            var contractors = await _saldeoSmartFacade.GetContractors();
+            var companies = await _context.Companies.ToListAsync();
 
-            // TODO: Update DB
+            foreach (var company in companies)
+            {
+                var contractors = await _saldeoSmartFacade.GetContractors(company.CompanyProgramId);
+
+                // TODO: Update DB
+            }
         }
     }
 }

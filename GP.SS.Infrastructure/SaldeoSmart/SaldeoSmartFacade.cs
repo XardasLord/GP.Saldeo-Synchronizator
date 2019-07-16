@@ -60,22 +60,21 @@ namespace GP.SS.Infrastructure.SaldeoSmart
                 });
         }
 
-        public async Task<object> GetContractors()
+        public async Task<object> GetContractors(string companyProgramId)
         {
             var client = new RestClient(_saldeoSmartSettings.Value.ApiUrl);
             var request = new RestRequest(_saldeoSmartSettings.Value.GetContractorsResource, Method.GET);
 
             var requestId = Guid.NewGuid().ToString();
-            var companyId = "SYMFONIA::ASPODATK";
             var parameters = new Dictionary<string, string>
             {
                 { "username", _saldeoSmartSettings.Value.Username },
                 { "req_id", requestId },
-                { "company_program_id", companyId }
+                { "company_program_id", companyProgramId }
             };
             var signatureHash = _saldeoSmartAuthorizationHelper.GenerateRequestSignatureHash(parameters, _saldeoSmartSettings.Value.ApiKey);
 
-            request.AddParameter("company_program_id", companyId);
+            request.AddParameter("company_program_id", companyProgramId);
             request.AddParameter("req_id", requestId);
             request.AddParameter("username", _saldeoSmartSettings.Value.Username);
             request.AddParameter("req_sig", signatureHash);
