@@ -136,13 +136,12 @@ namespace GP.SS.Infrastructure.SaldeoSmart
                 return new ResponseDto<DocumentsDto>(false, response.Data.Status);
             }
 
-            return new ResponseDto<DocumentsDto>(true);
-            throw new NotImplementedException();
-            //return new ResponseDto<DocumentsDto>(true,
-            //    new DocumentsDto
-            //    {
-            //        Contractors = response.Data.Contractors.ContractorsList
-            //    });
+            return new ResponseDto<DocumentsDto>(true,
+                new DocumentsDto
+                {
+                    ContractorsList = response.Data.Contractors.ContractorsList,
+                    DocumentsList = response.Data.Documents.DocumentsList
+                });
         }
     }
 }

@@ -72,7 +72,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
     public class ContractorsOnDocument
     {
         [XmlElement("CONTRACTOR")]
-        public ContractorOnDocument[] ContractorList { get; set; }
+        public ContractorOnDocument[] ContractorsList { get; set; }
     }
 
     public class ContractorOnDocument
