@@ -87,10 +87,10 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         public string FullName { get; set; }
 
         [XmlElement("SUPPLIER")]
-        public string IsSupplier { get; set; }
+        public bool IsSupplier { get; set; }
 
         [XmlElement("CUSTOMER")]
-        public string IsCustomer { get; set; }
+        public bool IsCustomer { get; set; }
 
         [XmlElement("VAT_NUMBER")]
         public string VatNumber { get; set; }
@@ -234,7 +234,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
     public class VatRegistries
     {
         [XmlElement("VAT_REGISTRY")]
-        public VatRegistry[] VatRegistry { get; set; }
+        public VatRegistry[] VatRegistryList { get; set; }
     }
 
     public class VatRegistry

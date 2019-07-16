@@ -93,12 +93,28 @@ namespace GP.SS.Business
                     continue;
                 }
 
-                //var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
+                var entityDocuments = _mapper.Map<List<Document>>(result.ResultObject.DocumentsList);
 
-                //entityContractors.ForEach(c => c.CompanyId = company.Id);
+                foreach (var entityDocument in entityDocuments)
+                {
+                    var contractorId = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id).Contractor.ContractorId;
+                    var contractor = result.ResultObject.ContractorsList.Single(x => x.ContractorId == contractorId);
 
-                //_context.Contractors.AddOrUpdate(entityContractors);
-                //await _context.SaveChangesAsync();
+                    entityDocument.ContractorFullName = contractor.FullName;
+                    entityDocument.ContractorShortName = contractor.ShortName;
+                    entityDocument.ContractorVatNumber = contractor.VatNumber;
+                    entityDocument.ContractorCity = contractor.City;
+                    entityDocument.ContractorStreet = contractor.Street;
+                    entityDocument.ContractorPostcode = contractor.Postcode;
+                    entityDocument.ContractorTelephone = contractor.Telephone;
+                    entityDocument.ContractorIsSupplier = contractor.IsSupplier;
+                    entityDocument.ContractorIsCustomer = contractor.IsCustomer;
+                }
+
+                entityDocuments.ForEach(c => c.CompanyId = company.Id);
+
+                _context.Documents.AddRange(entityDocuments);
+                await _context.SaveChangesAsync();
             }
 
             if (failed)
