@@ -39,6 +39,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             request.AddParameter("req_id", requestId);
             request.AddParameter("username", _saldeoSmartSettings.Value.Username);
             request.AddParameter("req_sig", signatureHash);
+
             client.UseDotNetXmlSerializer();
 
             var response = await client.ExecuteTaskAsync<CompaniesResponse>(request);
@@ -60,7 +61,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
                 });
         }
 
-        public async Task<object> GetContractors(string companyProgramId)
+        public async Task<ResponseDto<ContractorsDto>> GetContractors(string companyProgramId)
         {
             var client = new RestClient(_saldeoSmartSettings.Value.ApiUrl);
             var request = new RestRequest(_saldeoSmartSettings.Value.GetContractorsResource, Method.GET);
@@ -79,9 +80,25 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             request.AddParameter("username", _saldeoSmartSettings.Value.Username);
             request.AddParameter("req_sig", signatureHash);
 
-            var response = await client.ExecuteTaskAsync(request);
+            client.UseDotNetXmlSerializer();
 
-            throw new System.NotImplementedException();
+            var response = await client.ExecuteTaskAsync<ContractorsResponse>(request);
+
+            if (response.Data == null)
+            {
+                return new ResponseDto<ContractorsDto>(false, "Response Data is null");
+            }
+
+            if (response.Data.Status != "OK")
+            {
+                return new ResponseDto<ContractorsDto>(false, response.Data.Status);
+            }
+
+            return new ResponseDto<ContractorsDto>(true,
+                new ContractorsDto
+                {
+                    Contractors = response.Data.Contractors.ContractorsList
+                });
         }
     }
 }

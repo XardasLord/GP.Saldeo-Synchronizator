@@ -7,6 +7,6 @@ namespace GP.SS.Infrastructure.SaldeoSmart
     public interface ISaldeoSmartFacade
     {
 	    Task<ResponseDto<CompaniesDto>> GetCompanies();
-        Task<object> GetContractors(string companyProgramId);
+        Task<ResponseDto<ContractorsDto>> GetContractors(string companyProgramId);
     }
 }
