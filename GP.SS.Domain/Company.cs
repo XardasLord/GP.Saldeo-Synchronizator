@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
     [Table("Saldeo.Companies")]
-    public class Company
+    public class Company : DomainEntityBase
     {
-        [Key]
-        public string Id { get; set; }
         public string CompanyProgramId { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
@@ -18,5 +16,7 @@ namespace GP.SS.Domain
         public string Postcode { get; set; }
         public string Street { get; set; }
         public string Telephone { get; set; }
+
+        public ICollection<Contractor> Contractors { get; set; }
     }
 }

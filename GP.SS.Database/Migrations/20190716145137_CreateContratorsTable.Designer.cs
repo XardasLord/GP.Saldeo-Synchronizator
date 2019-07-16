@@ -2,15 +2,17 @@
 using GP.SS.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
 namespace GP.SS.Database.Migrations
 {
     [DbContext(typeof(SaldeoSynchronizatorContext))]
-    partial class SaldeoSynchronizatorContextModelSnapshot : ModelSnapshot
+    [Migration("20190716145137_CreateContratorsTable")]
+    partial class CreateContratorsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

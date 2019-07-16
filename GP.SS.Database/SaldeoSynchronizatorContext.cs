@@ -25,5 +25,6 @@ namespace GP.SS.Database
         }
 
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Contractor> Contractors { get; set; }
     }
 }

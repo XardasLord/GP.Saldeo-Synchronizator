@@ -11,5 +11,6 @@ namespace GP.SS.Database
         Task<int> SaveChangesAsync();
 
         DbSet<Company> Companies { get; set; }
+        DbSet<Contractor> Contractors { get; set; }
     }
 }

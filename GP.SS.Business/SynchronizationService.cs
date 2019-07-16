@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using GP.SS.Database;
@@ -33,28 +35,41 @@ namespace GP.SS.Business
 
             var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
 
-            foreach (var company in entityCompanies)
-            {
-                if (await _context.Companies.AnyAsync(x => x.Id == company.Id))
-                {
-                    continue;
-                }
-
-                _context.Companies.Add(company);
-            }
-
+            _context.Companies.AddOrUpdate(entityCompanies);
             await _context.SaveChangesAsync();
         }
 
         public async Task SyncContractorsFromSaldeo()
         {
-            var companies = await _context.Companies.ToListAsync();
+            var failed = false;
+            var errorMsg = new StringBuilder();
+
+            var companies = await _context.Companies
+                .Where(x => x.CompanyProgramId != null)
+                .ToListAsync();
 
             foreach (var company in companies)
             {
-                var contractors = await _saldeoSmartFacade.GetContractors(company.CompanyProgramId);
+                var result = await _saldeoSmartFacade.GetContractors(company.CompanyProgramId);
 
-                // TODO: Update DB
+                if (!result.Success)
+                {
+                    errorMsg.AppendLine($"Sync contractors failed for company ID: {company.Id} ({company.CompanyProgramId}) - {result.ErrorDescription}");
+                    failed = true;
+                    continue;
+                }
+
+                var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
+
+                entityContractors.ForEach(c => c.CompanyId = company.Id);
+
+                _context.Contractors.AddOrUpdate(entityContractors);
+                await _context.SaveChangesAsync();
+            }
+
+            if (failed)
+            {
+                throw new Exception(errorMsg.ToString());
             }
         }
     }
