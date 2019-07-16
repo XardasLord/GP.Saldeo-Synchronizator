@@ -22,8 +22,9 @@ namespace GP.SS.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-	        await _synchronizationService.SyncCompaniesFromSaldeo();
-            await _synchronizationService.SyncContractorsFromSaldeo();
+	        //await _synchronizationService.SyncCompaniesFromSaldeo();
+         //   await _synchronizationService.SyncContractorsFromSaldeo();
+            await _synchronizationService.SyncDocumentsFromSaldeo();
             return new string[] { "value1", "value2" };
         }
 

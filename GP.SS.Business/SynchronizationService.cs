@@ -72,5 +72,39 @@ namespace GP.SS.Business
                 throw new Exception(errorMsg.ToString());
             }
         }
+
+        public async Task SyncDocumentsFromSaldeo()
+        {
+            var failed = false;
+            var errorMsg = new StringBuilder();
+
+            var companies = await _context.Companies
+                .Where(x => x.CompanyProgramId != null)
+                .ToListAsync();
+
+            foreach (var company in companies)
+            {
+                var result = await _saldeoSmartFacade.GetDocuments(company.CompanyProgramId);
+
+                if (!result.Success)
+                {
+                    errorMsg.AppendLine($"Sync documents failed for company ID: {company.Id} ({company.CompanyProgramId}) - {result.ErrorDescription}");
+                    failed = true;
+                    continue;
+                }
+
+                //var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
+
+                //entityContractors.ForEach(c => c.CompanyId = company.Id);
+
+                //_context.Contractors.AddOrUpdate(entityContractors);
+                //await _context.SaveChangesAsync();
+            }
+
+            if (failed)
+            {
+                throw new Exception(errorMsg.ToString());
+            }
+        }
     }
 }

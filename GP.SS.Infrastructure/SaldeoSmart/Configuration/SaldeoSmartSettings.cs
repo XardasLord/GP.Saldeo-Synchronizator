@@ -7,5 +7,6 @@
 		public string Username { get; set; }
 		public string GetContractorsResource { get; set; }
 		public string GetCompaniesResource { get; set; }
-	}
+	    public string GetDocumentsResource { get; set; }
+    }
 }

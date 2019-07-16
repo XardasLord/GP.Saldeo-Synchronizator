@@ -6,5 +6,6 @@ namespace GP.SS.Business
 	{
 		Task SyncCompaniesFromSaldeo();
 		Task SyncContractorsFromSaldeo();
+	    Task SyncDocumentsFromSaldeo();
     }
 }
