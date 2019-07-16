@@ -143,6 +143,12 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         [XmlElement("CLASSIFICATION")]
         public string Classification { get; set; }
 
+        [XmlElement("CATEGORY")]
+        public string Category { get; set; }
+
+        [XmlElement("DESCRIPTION")]
+        public string Description { get; set; }
+
         [XmlElement("CONTRACTOR")]
         public Contractor1 Contractor { get; set; }
 
@@ -251,9 +257,6 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
     public class Item
     {
-        [XmlElement("EXTRACTION")]
-        public string Extraction { get; set; }
-
         [XmlElement("RATE")]
         public string Rate { get; set; }
 
@@ -262,6 +265,12 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
         [XmlElement("VAT")]
         public string Vat { get; set; }
+
+        [XmlElement("CATEGORY")]
+        public string Category { get; set; }
+
+        [XmlElement("DESCRIPTION")]
+        public string Description { get; set; }
 
         [XmlElement("DIMENSIONS")]
         public Dimensions Dimensions { get; set; }

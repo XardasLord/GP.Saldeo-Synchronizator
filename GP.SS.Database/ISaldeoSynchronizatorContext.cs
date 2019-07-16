@@ -12,5 +12,8 @@ namespace GP.SS.Database
 
         DbSet<Company> Companies { get; set; }
         DbSet<Contractor> Contractors { get; set; }
+        DbSet<Document> Documents { get; set; }
+        DbSet<DocumentItem> DocumentItems { get; set; }
+        DbSet<DocumentVatRegistry> DocumentVatRegistries { get; set; }
     }
 }

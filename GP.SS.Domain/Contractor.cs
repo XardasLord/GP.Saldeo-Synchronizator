@@ -5,7 +5,7 @@ namespace GP.SS.Domain
     [Table("Saldeo.Contractors")]
     public class Contractor : DomainEntityBase
     {
-        public string ContractorProgramId { get; set; }
+        public string ContractorProgramId { get; set; } // TODO: typo, should be CompanyProgramId
         public string ShortName { get; set; }
         public string FullName { get; set; }
         public bool IsSupplier { get; set; }
