@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using AutoMapper;
 using GP.SS.Api.Mappings;
+using GP.SS.Api.Quartz;
 using GP.SS.Business;
+using GP.SS.Business.Jobs;
 using GP.SS.Database;
 using GP.SS.Infrastructure.SaldeoSmart;
 using GP.SS.Infrastructure.SaldeoSmart.Configuration;
@@ -17,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace GP.SS.Api
 {
@@ -42,6 +46,7 @@ namespace GP.SS.Api
             services.AddTransient<ISaldeoSmartAuthorizationHelper, SaldeoSmartAuthorizationHelper>();
 
             services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddAutoMapper(typeof(BusinessMappers).GetTypeInfo().Assembly);
 
@@ -50,6 +55,8 @@ namespace GP.SS.Api
             //    config.UseStorage(new OracleStorage(Configuration.GetConnectionString("SaldeoSynchronizatorDB")));
             //    config.UseConsole();
             //});
+
+            services.UseQuartz(typeof(SynchronizeSaldeoCompaniesJob));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -72,6 +79,9 @@ namespace GP.SS.Api
             //{
             //    Authorization = new List<IDashboardAuthorizationFilter>()
             //});
+
+            var scheduler = app.ApplicationServices.GetService<IScheduler>();
+            QuartzServicesUtilities.StartJob<SynchronizeSaldeoCompaniesJob>(scheduler, TimeSpan.FromSeconds(60));
 
             app.UseHttpsRedirection();
             app.UseMvc();
