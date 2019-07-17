@@ -7,8 +7,7 @@ namespace GP.SS.Domain
     public class DocumentVatRegistry
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Rate { get; set; }
         public string Netto { get; set; }
         public string Vat { get; set; }

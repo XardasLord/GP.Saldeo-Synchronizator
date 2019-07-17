@@ -111,8 +111,8 @@ namespace GP.SS.Business
                     entityDocument.ContractorIsCustomer = contractor.IsCustomer;
                 }
 
-                entityDocuments.ForEach(c => c.CompanyId = company.Id);
-
+                entityDocuments.ForEach(x => x.CompanyId = company.Id);
+                
                 _context.Documents.AddRange(entityDocuments);
                 await _context.SaveChangesAsync();
             }
