@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
-using Quartz;
+using Coravel.Invocable;
 
 namespace GP.SS.Business.Jobs
 {
-    public class SynchronizeSaldeoCompaniesJob : IJob
+    public class SynchronizeSaldeoCompaniesJob : IInvocable
     {
         private readonly ISynchronizationService _synchronizationService;
 
@@ -13,15 +13,16 @@ namespace GP.SS.Business.Jobs
             _synchronizationService = synchronizationService;
         }
 
-        public async Task Execute(IJobExecutionContext context)
+        public Task Invoke()
         {
             // TODO: LOGGER START
             Debug.WriteLine("SyncCompaniesFromSaldeo STARTED");
 
-            await _synchronizationService.SyncCompaniesFromSaldeo();
+            //await _synchronizationService.SyncCompaniesFromSaldeo();
 
             // TODO: LOGGER STOP
             Debug.WriteLine("SyncCompaniesFromSaldeo STOPPED");
+            return Task.CompletedTask;
         }
     }
 }
