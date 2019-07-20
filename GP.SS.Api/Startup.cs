@@ -71,10 +71,10 @@ namespace GP.SS.Api
             var provider = app.ApplicationServices;
             provider.UseScheduler(scheduler =>
             {
-                //scheduler.OnWorker("SaldeoSyncTasks");
-                //scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().HourlyAt(58);
-                //scheduler.Schedule<SynchronizeSaldeoContractorsJob>().HourlyAt(00);
-                //scheduler.Schedule<SynchronizeSaldeoDocumentsJob>().HourlyAt(5);
+                scheduler.OnWorker("SaldeoSyncTasks");
+                scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().HourlyAt(10);
+                scheduler.Schedule<SynchronizeSaldeoContractorsJob>().HourlyAt(12);
+                scheduler.Schedule<SynchronizeSaldeoDocumentsJob>().HourlyAt(16);
             })
                 .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>());
 
