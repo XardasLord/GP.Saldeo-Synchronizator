@@ -13,7 +13,9 @@ namespace GP.SS.Api
             // NLog: setup the logger first to catch all errors
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var isDevelop = environment == EnvironmentName.Development;
-            var logger = NLogBuilder.ConfigureNLog(isDevelop ? "nlog.Development.config" : "nlog.config").GetCurrentClassLogger();
+            var isTest = environment == "Test";
+            
+            var logger = NLogBuilder.ConfigureNLog(isDevelop ? "nlog.Development.config" : isTest ? "nlog.Test.config" : "nlog.config").GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");
