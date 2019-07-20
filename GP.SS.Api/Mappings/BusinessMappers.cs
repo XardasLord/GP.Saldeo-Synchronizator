@@ -10,7 +10,7 @@ namespace GP.SS.Api.Mappings
             CreateMap<Infrastructure.SaldeoSmart.ResponseModels.Company, Domain.Company>();
 
             CreateMap<Infrastructure.SaldeoSmart.ResponseModels.Contractor, Domain.Contractor>()
-                .ForMember(x => x.Emails, opt => opt.MapFrom(y => string.Join(';', y.Emails.ToList())));
+                .ForMember(x => x.Emails, opt => opt.MapFrom(y => string.Join(';', y.Emails.Select(e => e.Email))));
 
             CreateMap<Infrastructure.SaldeoSmart.ResponseModels.Document, Domain.Document>()
                 .ForMember(x => x.ContractorFullName, opt => opt.Ignore())
