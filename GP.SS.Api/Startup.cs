@@ -45,7 +45,6 @@ namespace GP.SS.Api
             services.AddTransient<SynchronizeSaldeoCompaniesJob>();
 
             services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
-            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddAutoMapper(typeof(BusinessMappers).GetTypeInfo().Assembly);
 
