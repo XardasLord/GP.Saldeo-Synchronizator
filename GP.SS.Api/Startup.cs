@@ -43,6 +43,8 @@ namespace GP.SS.Api
             services.AddTransient<ISaldeoSmartFacade, SaldeoSmartFacade>();
             services.AddTransient<ISaldeoSmartAuthorizationHelper, SaldeoSmartAuthorizationHelper>();
             services.AddTransient<SynchronizeSaldeoCompaniesJob>();
+            services.AddTransient<SynchronizeSaldeoContractorsJob>();
+            services.AddTransient<SynchronizeSaldeoDocumentsJob>();
 
             services.Configure<SaldeoSmartSettings>(Configuration.GetSection("SaldeoSmartSettings"));
 
@@ -69,8 +71,10 @@ namespace GP.SS.Api
             var provider = app.ApplicationServices;
             provider.UseScheduler(scheduler =>
             {
-                scheduler.OnWorker("SaldeoSyncTasks");
-                scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().EveryMinute();
+                //scheduler.OnWorker("SaldeoSyncTasks");
+                //scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().HourlyAt(58);
+                //scheduler.Schedule<SynchronizeSaldeoContractorsJob>().HourlyAt(00);
+                //scheduler.Schedule<SynchronizeSaldeoDocumentsJob>().HourlyAt(5);
             })
                 .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>());
 

@@ -124,23 +124,30 @@ namespace GP.SS.Business
 
                 foreach (var entityDocument in entityDocuments)
                 {
-                    var contractorId = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id).Contractor.ContractorId;
-                    var contractor = result.ResultObject.ContractorsList.Single(x => x.ContractorId == contractorId);
+                    var contractorId = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id).Contractor?.ContractorId;
+                    var contractor = contractorId is null ? null : result.ResultObject.ContractorsList.Single(x => x.ContractorId == contractorId);
 
-                    entityDocument.ContractorFullName = contractor.FullName;
-                    entityDocument.ContractorShortName = contractor.ShortName;
-                    entityDocument.ContractorVatNumber = contractor.VatNumber;
-                    entityDocument.ContractorCity = contractor.City;
-                    entityDocument.ContractorStreet = contractor.Street;
-                    entityDocument.ContractorPostcode = contractor.Postcode;
-                    entityDocument.ContractorTelephone = contractor.Telephone;
-                    entityDocument.ContractorIsSupplier = contractor.IsSupplier;
-                    entityDocument.ContractorIsCustomer = contractor.IsCustomer;
+                    entityDocument.ContractorFullName = contractor?.FullName;
+                    entityDocument.ContractorShortName = contractor?.ShortName;
+                    entityDocument.ContractorVatNumber = contractor?.VatNumber;
+                    entityDocument.ContractorCity = contractor?.City;
+                    entityDocument.ContractorStreet = contractor?.Street;
+                    entityDocument.ContractorPostcode = contractor?.Postcode;
+                    entityDocument.ContractorTelephone = contractor?.Telephone;
+                    entityDocument.ContractorIsSupplier = contractor?.IsSupplier ?? false;
+                    entityDocument.ContractorIsCustomer = contractor?.IsCustomer ?? false;
                 }
 
                 entityDocuments.ForEach(x => x.CompanyId = company.Id);
 
-                _context.Documents.AddRange(entityDocuments);
+                foreach (var entityDocument in entityDocuments)
+                {
+                    if (await _context.Documents.AnyAsync(x => x.Id == entityDocument.Id) == false)
+                    {
+                        _context.Documents.Add(entityDocument);
+                    }
+                }
+                
                 await _context.SaveChangesAsync();
             }
 

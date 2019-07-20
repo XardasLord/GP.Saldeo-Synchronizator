@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 
 namespace GP.SS.Business.Jobs
 {
-    public class SynchronizeSaldeoContractorsJob : IInvocable
+    public class SynchronizeSaldeoDocumentsJob : IInvocable
     {
         private readonly ISynchronizationService _synchronizationService;
         private readonly ILogger<SynchronizeSaldeoCompaniesJob> _logger;
 
-        public SynchronizeSaldeoContractorsJob(ISynchronizationService synchronizationService, ILogger<SynchronizeSaldeoCompaniesJob> logger)
+        public SynchronizeSaldeoDocumentsJob(ISynchronizationService synchronizationService, ILogger<SynchronizeSaldeoCompaniesJob> logger)
         {
             _synchronizationService = synchronizationService;
             _logger = logger;
@@ -17,11 +17,11 @@ namespace GP.SS.Business.Jobs
 
         public async Task Invoke()
         {
-            _logger.LogInformation("SyncContractorsFromSaldeo STARTED");
+            _logger.LogInformation("SyncDocumentsFromSaldeo STARTED");
 
-            await _synchronizationService.SyncContractorsFromSaldeo();
+            await _synchronizationService.SyncDocumentsFromSaldeo();
 
-            _logger.LogInformation("SyncContractorsFromSaldeo FINISHED");
+            _logger.LogInformation("SyncDocumentsFromSaldeo FINISHED");
         }
     }
 }
