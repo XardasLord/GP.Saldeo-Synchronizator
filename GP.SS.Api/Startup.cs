@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using AutoMapper;
 using Coravel;
+using Coravel.Scheduling.Schedule.Interfaces;
 using GP.SS.Api.Mappings;
 using GP.SS.Business;
 using GP.SS.Business.Jobs;
@@ -14,17 +16,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace GP.SS.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IServiceProvider services)
         {
             Configuration = configuration;
+            Services = services;
         }
 
         public IConfiguration Configuration { get; }
+        public IServiceProvider Services { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -65,9 +70,13 @@ namespace GP.SS.Api
             var provider = app.ApplicationServices;
             provider.UseScheduler(scheduler =>
             {
+                scheduler.OnWorker("SaldeoSyncTasks");
                 scheduler.Schedule<SynchronizeSaldeoCompaniesJob>()
                     .EveryMinute();
-            });
+
+            })
+                .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>())
+                .OnError(ExceptionHandler.HandleException);
 
             app.UseHttpsRedirection();
             app.UseMvc();

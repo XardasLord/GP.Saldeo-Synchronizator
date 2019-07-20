@@ -13,16 +13,15 @@ namespace GP.SS.Business.Jobs
             _synchronizationService = synchronizationService;
         }
 
-        public Task Invoke()
+        public async Task Invoke()
         {
             // TODO: LOGGER START
             Debug.WriteLine("SyncCompaniesFromSaldeo STARTED");
 
-            //await _synchronizationService.SyncCompaniesFromSaldeo();
+            await _synchronizationService.SyncCompaniesFromSaldeo();
 
             // TODO: LOGGER STOP
             Debug.WriteLine("SyncCompaniesFromSaldeo STOPPED");
-            return Task.CompletedTask;
         }
     }
 }

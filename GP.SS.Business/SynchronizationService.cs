@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using GP.SS.Database;
 using GP.SS.Domain;
 using GP.SS.Infrastructure.SaldeoSmart;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace GP.SS.Business
@@ -15,17 +12,19 @@ namespace GP.SS.Business
     public class SynchronizationService : ISynchronizationService
     {
         private readonly ISaldeoSmartFacade _saldeoSmartFacade;
+        private readonly ISaldeoSynchronizatorContext _context;
         private readonly IMapper _mapper;
 
-        private readonly DbContextOptionsBuilder<SaldeoSynchronizatorContext> _optionsBuilder;
+        //private readonly DbContextOptionsBuilder<SaldeoSynchronizatorContext> _optionsBuilder;
 
-        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, IMapper mapper, IOptions<ConnectionStrings> connectionStringsOptions)
+        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, ISaldeoSynchronizatorContext context, IMapper mapper, IOptions<ConnectionStrings> connectionStringsOptions)
         {
             _saldeoSmartFacade = saldeoSmartFacade;
+            _context = context;
             _mapper = mapper;
 
-            _optionsBuilder = new DbContextOptionsBuilder<SaldeoSynchronizatorContext>();
-            _optionsBuilder.UseOracle(connectionStringsOptions.Value.SaldeoSynchronizatorDB);
+            //_optionsBuilder = new DbContextOptionsBuilder<SaldeoSynchronizatorContext>();
+            //_optionsBuilder.UseOracle(connectionStringsOptions.Value.SaldeoSynchronizatorDB);
         }
 
         public async Task SyncCompaniesFromSaldeo()
@@ -39,13 +38,13 @@ namespace GP.SS.Business
 
             var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
 
-            using (var context = new SaldeoSynchronizatorContext(_optionsBuilder.Options))
-            {
-                context.Companies.AddOrUpdate(entityCompanies);
-                await context.SaveChangesAsync();
-            }
-            //_context.Companies.AddOrUpdate(entityCompanies);
-            //await _context.SaveChangesAsync();
+            //using (var context = new SaldeoSynchronizatorContext(_optionsBuilder.Options))
+            //{
+            //    context.Companies.AddOrUpdate(entityCompanies);
+            //    await context.SaveChangesAsync();
+            //}
+            _context.Companies.AddOrUpdate(entityCompanies);
+            await _context.SaveChangesAsync();
         }
 
         public async Task SyncContractorsFromSaldeo()
@@ -121,7 +120,7 @@ namespace GP.SS.Business
             //    }
 
             //    entityDocuments.ForEach(x => x.CompanyId = company.Id);
-                
+
             //    _context.Documents.AddRange(entityDocuments);
             //    await _context.SaveChangesAsync();
             //}
