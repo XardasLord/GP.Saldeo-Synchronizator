@@ -14,11 +14,11 @@ namespace GP.SS.Business
     public class SynchronizationService : ISynchronizationService
     {
         private readonly ISaldeoSmartFacade _saldeoSmartFacade;
-        private readonly ISaldeoSynchronizatorContext _context;
+        private readonly SaldeoSynchronizatorContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<SynchronizationService> _logger;
 
-        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, ISaldeoSynchronizatorContext context, IMapper mapper, ILogger<SynchronizationService> logger)
+        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, SaldeoSynchronizatorContext context, IMapper mapper, ILogger<SynchronizationService> logger)
         {
             _saldeoSmartFacade = saldeoSmartFacade;
             _context = context;

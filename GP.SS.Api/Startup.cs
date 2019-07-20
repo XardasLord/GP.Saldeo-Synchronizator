@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using AutoMapper;
-using Coravel;
-using Coravel.Scheduling.Schedule.Interfaces;
+using Coravel.Pro;
 using GP.SS.Api.Mappings;
 using GP.SS.Business;
 using GP.SS.Business.Jobs;
@@ -16,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace GP.SS.Api
 {
@@ -34,9 +32,9 @@ namespace GP.SS.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ISaldeoSynchronizatorContext, SaldeoSynchronizatorContext>(
+            services.AddDbContext<SaldeoSynchronizatorContext>(
                 opts => opts.UseOracle(Configuration.GetConnectionString("SaldeoSynchronizatorDB"),
-                    b => b.MigrationsAssembly(typeof(ISaldeoSynchronizatorContext).Namespace))
+                    b => b.MigrationsAssembly(typeof(SaldeoSynchronizatorContext).Namespace))
             );
 
             services.AddTransient<ISynchronizationService, SynchronizationService>();
@@ -50,7 +48,7 @@ namespace GP.SS.Api
 
             services.AddAutoMapper(typeof(BusinessMappers).GetTypeInfo().Assembly);
 
-            services.AddScheduler();
+            services.AddCoravelPro(typeof(SaldeoSynchronizatorContext));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -68,15 +66,7 @@ namespace GP.SS.Api
                 app.UseHsts();
             }
 
-            var provider = app.ApplicationServices;
-            provider.UseScheduler(scheduler =>
-            {
-                scheduler.OnWorker("SaldeoSyncTasks");
-                scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().HourlyAt(10);
-                scheduler.Schedule<SynchronizeSaldeoContractorsJob>().HourlyAt(12);
-                scheduler.Schedule<SynchronizeSaldeoDocumentsJob>().HourlyAt(16);
-            })
-                .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>());
+            app.UseCoravelPro();
 
             app.UseHttpsRedirection();
             app.UseMvc();
