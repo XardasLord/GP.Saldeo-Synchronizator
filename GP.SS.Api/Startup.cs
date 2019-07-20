@@ -70,9 +70,7 @@ namespace GP.SS.Api
             provider.UseScheduler(scheduler =>
             {
                 scheduler.OnWorker("SaldeoSyncTasks");
-                scheduler.Schedule<SynchronizeSaldeoCompaniesJob>()
-                    .EveryMinute();
-
+                scheduler.Schedule<SynchronizeSaldeoCompaniesJob>().EveryMinute();
             })
                 .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>());
 

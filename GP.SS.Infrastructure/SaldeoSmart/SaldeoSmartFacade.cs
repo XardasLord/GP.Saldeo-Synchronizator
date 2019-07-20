@@ -57,7 +57,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             return new ResponseDto<CompaniesDto>(true,
                 new CompaniesDto()
                 {
-                    Companies = response.Data.Companies.Company
+                    Companies = response.Data.Companies?.Company
                 });
         }
 
@@ -97,7 +97,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             return new ResponseDto<ContractorsDto>(true,
                 new ContractorsDto
                 {
-                    Contractors = response.Data.Contractors.ContractorsList
+                    Contractors = response.Data.Contractors?.ContractorsList
                 });
         }
 
@@ -139,8 +139,8 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             return new ResponseDto<DocumentsDto>(true,
                 new DocumentsDto
                 {
-                    ContractorsList = response.Data.Contractors.ContractorsList,
-                    DocumentsList = response.Data.Documents.DocumentsList
+                    ContractorsList = response.Data.Contractors?.ContractorsList,
+                    DocumentsList = response.Data.Documents?.DocumentsList
                 });
         }
     }

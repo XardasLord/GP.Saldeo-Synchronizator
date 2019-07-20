@@ -36,6 +36,12 @@ namespace GP.SS.Business
                 return;
             }
 
+            if (result.ResultObject.Companies is null)
+            {
+                _logger.LogError("There is no companies in Saldeo");
+                return;
+            }
+
             _logger.LogInformation($"Companies from Saldeo count: {result.ResultObject.Companies.Length}");
 
             var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
@@ -59,12 +65,18 @@ namespace GP.SS.Business
 
                 if (!result.Success)
                 {
-                    errorMsg.AppendLine($"Sync contractors failed for company ID: {company.Id} ({company.CompanyProgramId}) - {result.ErrorDescription}");
+                    errorMsg.AppendLine($"Sync contractors failed for company ID {company.Id} ({company.CompanyProgramId}) - {result.ErrorDescription}");
                     failed = true;
                     continue;
                 }
 
-                _logger.LogInformation($"Contractors count from Saldeo for company with programId {company.CompanyProgramId}: {result.ResultObject.Contractors.Length}");
+                if (result.ResultObject.Contractors is null)
+                {
+                    _logger.LogInformation($"There is no contractors for company ID: {company.Id} ({company.CompanyProgramId}) in Saldeo");
+                    continue;
+                }
+
+                _logger.LogInformation($"Contractors count from Saldeo for company ID {company.Id} ({company.CompanyProgramId}): {result.ResultObject.Contractors.Length}");
 
                 var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
 
@@ -100,7 +112,13 @@ namespace GP.SS.Business
                     continue;
                 }
 
-                _logger.LogInformation($"Documents count from Saldeo for company with programId {company.CompanyProgramId}: {result.ResultObject.DocumentsList.Length}");
+                if (result.ResultObject.DocumentsList is null)
+                {
+                    _logger.LogInformation($"There is no documents for company ID: {company.Id} ({company.CompanyProgramId}) in Saldeo");
+                    continue;
+                }
+
+                _logger.LogInformation($"Documents count from Saldeo for company ID {company.Id} ({company.CompanyProgramId}): {result.ResultObject.DocumentsList.Length}");
 
                 var entityDocuments = _mapper.Map<List<Document>>(result.ResultObject.DocumentsList);
 
