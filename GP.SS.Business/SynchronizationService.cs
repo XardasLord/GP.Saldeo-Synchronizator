@@ -81,7 +81,7 @@ namespace GP.SS.Business
                 var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
 
                 entityContractors.ForEach(c => c.CompanyId = company.Id);
-
+                
                 _context.Contractors.AddOrUpdate(entityContractors);
                 await _context.SaveChangesAsync();
             }
