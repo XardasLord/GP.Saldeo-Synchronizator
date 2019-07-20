@@ -74,8 +74,7 @@ namespace GP.SS.Api
                     .EveryMinute();
 
             })
-                .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>())
-                .OnError(ExceptionHandler.HandleException);
+                .LogScheduledTaskProgress(Services.GetService<ILogger<IScheduler>>());
 
             app.UseHttpsRedirection();
             app.UseMvc();

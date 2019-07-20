@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using GP.SS.Database;
 using GP.SS.Domain;
 using GP.SS.Infrastructure.SaldeoSmart;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace GP.SS.Business
 {
@@ -16,12 +16,14 @@ namespace GP.SS.Business
         private readonly ISaldeoSmartFacade _saldeoSmartFacade;
         private readonly ISaldeoSynchronizatorContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<SynchronizationService> _logger;
 
-        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, ISaldeoSynchronizatorContext context, IMapper mapper)
+        public SynchronizationService(ISaldeoSmartFacade saldeoSmartFacade, ISaldeoSynchronizatorContext context, IMapper mapper, ILogger<SynchronizationService> logger)
         {
             _saldeoSmartFacade = saldeoSmartFacade;
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task SyncCompaniesFromSaldeo()
@@ -30,8 +32,11 @@ namespace GP.SS.Business
 
             if (!result.Success)
             {
-                throw new Exception($"Get companies from Saldeo failed - {result.ErrorDescription}");
+                _logger.LogError($"Get companies from Saldeo failed - {result.ErrorDescription}");
+                return;
             }
+
+            _logger.LogInformation($"Companies from Saldeo count: {result.ResultObject.Companies.Length}");
 
             var entityCompanies = _mapper.Map<IEnumerable<Company>>(result.ResultObject.Companies);
 
@@ -59,6 +64,8 @@ namespace GP.SS.Business
                     continue;
                 }
 
+                _logger.LogInformation($"Contractors count from Saldeo for company with programId {company.CompanyProgramId}: {result.ResultObject.Contractors.Length}");
+
                 var entityContractors = _mapper.Map<List<Contractor>>(result.ResultObject.Contractors);
 
                 entityContractors.ForEach(c => c.CompanyId = company.Id);
@@ -69,7 +76,7 @@ namespace GP.SS.Business
 
             if (failed)
             {
-                throw new Exception(errorMsg.ToString());
+                _logger.LogError(errorMsg.ToString());
             }
         }
 
@@ -92,6 +99,8 @@ namespace GP.SS.Business
                     failed = true;
                     continue;
                 }
+
+                _logger.LogInformation($"Documents count from Saldeo for company with programId {company.CompanyProgramId}: {result.ResultObject.DocumentsList.Length}");
 
                 var entityDocuments = _mapper.Map<List<Document>>(result.ResultObject.DocumentsList);
 
@@ -119,7 +128,7 @@ namespace GP.SS.Business
 
             if (failed)
             {
-                throw new Exception(errorMsg.ToString());
+                _logger.LogError(errorMsg.ToString());
             }
         }
     }
