@@ -9,5 +9,6 @@ namespace GP.SS.Infrastructure.SaldeoSmart
 	    Task<ResponseDto<CompaniesDto>> GetCompanies();
         Task<ResponseDto<ContractorsDto>> GetContractors(string companyProgramId);
         Task<ResponseDto<DocumentsDto>> GetDocuments(string companyProgramId);
+        Task SetCompanyProgramId(string companyId, string companyProgramIdToSet);
     }
 }

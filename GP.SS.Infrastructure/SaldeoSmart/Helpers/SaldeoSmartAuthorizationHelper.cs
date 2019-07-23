@@ -23,7 +23,9 @@ namespace GP.SS.Infrastructure.SaldeoSmart.Helpers
 
 			baseSignature = baseSignature
 				.Replace("=", "%3D")
-				.Replace(":", "%3A");
+				.Replace(":", "%3A")
+			    .Replace("/", "%2F")
+			    .Replace("+", "%2B");
 
 			baseSignature = baseSignature + apiKey;
 
