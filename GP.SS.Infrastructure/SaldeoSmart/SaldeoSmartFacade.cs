@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using GP.SS.Common;
 using GP.SS.Infrastructure.SaldeoSmart.Configuration;
 using GP.SS.Infrastructure.SaldeoSmart.Helpers;
@@ -179,7 +178,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
         {
             string outputBase64;
 
-            byte[] inputBytes = Encoding.UTF8.GetBytes(xmlCommand);
+            var inputBytes = Encoding.UTF8.GetBytes(xmlCommand);
 
             using (var outputStream = new MemoryStream())
             {
