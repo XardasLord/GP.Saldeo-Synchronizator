@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using AutoMapper;
 using GP.SS.Database;
 using GP.SS.Domain;
@@ -126,6 +129,7 @@ namespace GP.SS.Business
                 {
                     var contractorId = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id).Contractor?.ContractorId;
                     var contractor = contractorId is null ? null : result.ResultObject.ContractorsList.Single(x => x.ContractorId == contractorId);
+                    
 
                     entityDocument.ContractorFullName = contractor?.FullName;
                     entityDocument.ContractorShortName = contractor?.ShortName;
@@ -136,6 +140,11 @@ namespace GP.SS.Business
                     entityDocument.ContractorTelephone = contractor?.Telephone;
                     entityDocument.ContractorIsSupplier = contractor?.IsSupplier ?? false;
                     entityDocument.ContractorIsCustomer = contractor?.IsCustomer ?? false;
+
+                    var document = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id);
+                    var project = document.Dimensions?.Dimension?.FirstOrDefault()?.DimensionValues?.FirstOrDefault()?.DimensionValue?.ProjectValue;
+
+                    entityDocument.Project = project;
                 }
 
                 entityDocuments.ForEach(x => x.CompanyId = company.Id);

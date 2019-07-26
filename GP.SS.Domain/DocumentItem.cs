@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo.DocumentItems")]
+    [Table("Saldeo_DocumentItems")]
     public class DocumentItem
     {
         [Key]
@@ -14,7 +14,7 @@ namespace GP.SS.Domain
         public string Category { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("FK_Saldeo.DocumentItems_Saldeo.Documents_DocumentId")]
+        [ForeignKey("FK_Saldeo_DocumentItems_Saldeo_Documents_DocumentId")]
         public string DocumentId { get; set; }
         public virtual Document Document { get; set; }
     }

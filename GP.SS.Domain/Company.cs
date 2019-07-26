@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo.Companies")]
+    [Table("Saldeo_Companies")]
     public class Company : DomainEntityBase
     {
         public string CompanyProgramId { get; set; }

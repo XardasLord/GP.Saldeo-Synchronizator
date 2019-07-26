@@ -303,13 +303,19 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
         public string AdditionalCode { get; set; }
 
         [XmlElement("DIMENSION_VALUES")]
-        public DimensionValues DimensionValues { get; set; }
+        public DimensionValues[] DimensionValues { get; set; }
     }
 
     public class DimensionValues
     {
         [XmlElement("DIMENSION_VALUE")] // TODO: ARRAY ?
-        public object DimensionValue { get; set; }
+        public Value DimensionValue { get; set; }
+    }
+
+    public class Value
+    {
+        [XmlElement("VALUE")]
+        public string ProjectValue { get; set; }
     }
 
     public class SaldeoSyncDocuments

@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo.Documents")]
+    [Table("Saldeo_Documents")]
     public class Document : DomainEntityBase
     {
+        [Column("Numer_dok")]
         public string Number { get; set; }
         public string DocumentTypeName { get; set; }
         public string DocumentTypeShortName { get; set; }
@@ -18,6 +19,7 @@ namespace GP.SS.Domain
         public bool IsDocumentPaid { get; set; }
         public string PaymentType { get; set; }
         public string Sum { get; set; }
+        public string Project { get; set; }
 
         // Contractor's snapshot
         public string ContractorShortName { get; set; }

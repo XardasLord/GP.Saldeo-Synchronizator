@@ -2,7 +2,7 @@
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo.Contractors")]
+    [Table("Saldeo_Contractors")]
     public class Contractor : DomainEntityBase
     {
         public string ContractorProgramId { get; set; } // TODO: typo, should be CompanyProgramId
@@ -17,7 +17,7 @@ namespace GP.SS.Domain
         public string Telephone { get; set; }
         public string Emails { get; set; }
 
-        [ForeignKey("FK_Saldeo.Contractors_Saldeo.Companies_CompanyId")]
+        [ForeignKey("FK_Saldeo_Contractors_Saldeo_Companies_CompanyId")]
         public string CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }

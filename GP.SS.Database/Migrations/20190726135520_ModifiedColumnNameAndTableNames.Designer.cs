@@ -3,15 +3,17 @@ using System;
 using GP.SS.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
 namespace GP.SS.Database.Migrations
 {
     [DbContext(typeof(SaldeoSynchronizatorContext))]
-    partial class SaldeoSynchronizatorContextModelSnapshot : ModelSnapshot
+    [Migration("20190726135520_ModifiedColumnNameAndTableNames")]
+    partial class ModifiedColumnNameAndTableNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,8 +200,6 @@ namespace GP.SS.Database.Migrations
                     b.Property<string>("PaymentDate");
 
                     b.Property<string>("PaymentType");
-
-                    b.Property<string>("Project");
 
                     b.Property<string>("ReceiveDate");
 

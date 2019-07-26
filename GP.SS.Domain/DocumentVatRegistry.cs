@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo.DocumentVatRegistries")]
+    [Table("Saldeo_DocumentVatRegistries")]
     public class DocumentVatRegistry
     {
         [Key]
@@ -12,7 +12,7 @@ namespace GP.SS.Domain
         public string Netto { get; set; }
         public string Vat { get; set; }
 
-        [ForeignKey("FK_Saldeo.DocumentVatRegistries_Saldeo.Documents_DocumentId")]
+        [ForeignKey("FK_Saldeo_DocumentVatRegistries_Saldeo_Documents_DocumentId")]
         public string DocumentId { get; set; }
         public virtual Document Document { get; set; }
     }
