@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
-    [Table("Saldeo_DocumentVatRegistries")]
-    public class DocumentVatRegistry
+    [Table("SALDEO_DOCUMENT_VAT_REGISTRIES")]
+    public class DocumentVatRegistry : DomainEntityBase
     {
-        [Key]
-        public string Id { get; set; }
+        [Column("RATE")]
         public string Rate { get; set; }
+
+        [Column("NETTO")]
         public string Netto { get; set; }
+
+        [Column("VAT")]
         public string Vat { get; set; }
 
         [ForeignKey("FK_Saldeo_DocumentVatRegistries_Saldeo_Documents_DocumentId")]
+        [Column("DOCUMENT_ID")]
         public string DocumentId { get; set; }
         public virtual Document Document { get; set; }
     }
