@@ -278,7 +278,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
     public class Dimensions
     {
-        [XmlElement("DIMENSION")] // TODO: ARRAY ?
+        [XmlElement("DIMENSION")]
         public object Dimension { get; set; }
     }
 
@@ -308,14 +308,20 @@ namespace GP.SS.Infrastructure.SaldeoSmart.ResponseModels
 
     public class DimensionValues
     {
-        [XmlElement("DIMENSION_VALUE")] // TODO: ARRAY ?
-        public Value DimensionValue { get; set; }
+        [XmlElement("DIMENSION_VALUE")]
+        public DimensionValue[] DimensionValue { get; set; }
     }
 
-    public class Value
+    public class DimensionValue
     {
-        [XmlElement("VALUE")]
-        public string ProjectValue { get; set; }
+        [XmlElement("CODE")]
+        public string Code { get; set; }
+
+        [XmlElement("DESCRIPTION")]
+        public string Description { get; set; }
+
+        [XmlElement("ADDITIONAL_CODE")]
+        public string AdditionalCode { get; set; }
     }
 
     public class SaldeoSyncDocuments
