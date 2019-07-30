@@ -42,8 +42,14 @@ namespace GP.SS.Domain
         [Column("SUM")]
         public string Sum { get; set; }
 
-        [Column("PROJECT")]
-        public string Project { get; set; }
+        [Column("PROJECT_CODE")]
+        public string ProjectCode { get; set; }
+
+        [Column("PROJECT_USER")]
+        public string ProjectUser { get; set; }
+
+        [Column("PROJECT_NAME")]
+        public string ProjectName { get; set; }
 
         // Contractor's snapshot
 

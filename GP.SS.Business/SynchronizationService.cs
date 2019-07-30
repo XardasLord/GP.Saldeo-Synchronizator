@@ -142,9 +142,11 @@ namespace GP.SS.Business
                     entityDocument.ContractorIsCustomer = contractor?.IsCustomer ?? false;
 
                     var document = result.ResultObject.DocumentsList.Single(x => x.DocumentId == entityDocument.Id);
-                    var project = document.Dimensions?.Dimension?.FirstOrDefault(x => x.Code == "Projekty")?.DimensionValues?.FirstOrDefault()?.DimensionValue?.FirstOrDefault()?.Code;
+                    var projectObject = document.Dimensions?.Dimension?.FirstOrDefault(x => x.Code == "Projekty")?.DimensionValues?.FirstOrDefault()?.DimensionValue?.FirstOrDefault();
 
-                    entityDocument.Project = project;
+                    entityDocument.ProjectCode = projectObject?.AdditionalCode;
+                    entityDocument.ProjectUser = projectObject?.Code;
+                    entityDocument.ProjectName = projectObject?.Description;
                 }
 
                 entityDocuments.ForEach(x => x.CompanyId = company.Id);
