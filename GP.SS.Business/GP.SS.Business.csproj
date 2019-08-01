@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="Coravel" Version="2.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GP.SS.Common\GP.SS.Common.csproj" />
+    <ProjectReference Include="..\GP.SS.Database\GP.SS.Database.csproj" />
+    <ProjectReference Include="..\GP.SS.Domain\GP.SS.Domain.csproj" />
+    <ProjectReference Include="..\GP.SS.Infrastructure\GP.SS.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

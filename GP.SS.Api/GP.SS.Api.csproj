@@ -6,8 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
+    <PackageReference Include="Coravel" Version="2.5.1" />
+    <PackageReference Include="Coravel.Pro" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="NLog" Version="4.6.6" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.19.0-beta4" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GP.SS.Business\GP.SS.Business.csproj" />
+    <ProjectReference Include="..\GP.SS.Database\GP.SS.Database.csproj" />
+    <ProjectReference Include="..\GP.SS.Infrastructure\GP.SS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
