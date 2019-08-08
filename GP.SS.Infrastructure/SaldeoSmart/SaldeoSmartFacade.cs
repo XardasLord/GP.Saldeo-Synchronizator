@@ -118,7 +118,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
                 { "username", _saldeoSmartSettings.Value.Username },
                 { "req_id", requestId },
                 { "company_program_id", companyProgramId },
-                { "policy", SaldeoPolicy }
+                { "policy", Last10DaysPolicy }
             };
             var signatureHash = _saldeoSmartAuthorizationHelper.GenerateRequestSignatureHash(parameters, _saldeoSmartSettings.Value.ApiKey);
 
@@ -126,7 +126,7 @@ namespace GP.SS.Infrastructure.SaldeoSmart
             request.AddParameter("req_id", requestId);
             request.AddParameter("username", _saldeoSmartSettings.Value.Username);
             request.AddParameter("req_sig", signatureHash);
-            request.AddParameter("policy", SaldeoPolicy);
+            request.AddParameter("policy", Last10DaysPolicy);
 
             client.UseDotNetXmlSerializer();
 
