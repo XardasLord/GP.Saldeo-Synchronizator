@@ -9,31 +9,31 @@ namespace GP.SS.Domain
         [Column("COMPANY_PROGRAM_ID")]
         public string CompanyProgramId { get; set; }
 
-        [Column("EMAIL")]
+        [Column("COMPANY_EMAIL")]
         public string Email { get; set; }
 
-        [Column("USERNAME")]
+        [Column("COMPANY_USERNAME")]
         public string Username { get; set; }
 
-        [Column("SHORT_NAME")]
+        [Column("COMPANY_SHORT_NAME")]
         public string ShortName { get; set; }
 
-        [Column("FULL_NAME")]
+        [Column("COMPANY_FULL_NAME")]
         public string FullName { get; set; }
 
-        [Column("VAT_NUMBER")]
+        [Column("COMPANY_VAT_NUMBER")]
         public string VatNumber { get; set; }
 
-        [Column("CITY")]
+        [Column("COMPANY_CITY")]
         public string City { get; set; }
 
-        [Column("POSTCODE")]
+        [Column("COMPANY_POSTCODE")]
         public string Postcode { get; set; }
 
-        [Column("STREET")]
+        [Column("COMPANY_STREET")]
         public string Street { get; set; }
 
-        [Column("TELEPHONE")]
+        [Column("COMPANY_TELEPHONE")]
         public string Telephone { get; set; }
 
         public ICollection<Contractor> Contractors { get; set; }
