@@ -3,15 +3,17 @@ using System;
 using GP.SS.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
 namespace GP.SS.Database.Migrations
 {
     [DbContext(typeof(SaldeoSynchronizatorContext))]
-    partial class SaldeoSynchronizatorContextModelSnapshot : ModelSnapshot
+    [Migration("20190830162048_RenamedColumnsAndChangedTypesAndAddedNewColumnsToSaldeoDocumentTable")]
+    partial class RenamedColumnsAndChangedTypesAndAddedNewColumnsToSaldeoDocumentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,15 +248,13 @@ namespace GP.SS.Database.Migrations
                         .HasColumnName("DOCUMENT_IS_PAID");
 
                     b.Property<DateTime?>("IssueDate")
-                        .HasColumnName("DATE_ISSUE")
-                        .HasColumnType("date");
+                        .HasColumnName("DATE_ISSUE");
 
                     b.Property<string>("Number")
                         .HasColumnName("DOCUMENT_NUMBER");
 
                     b.Property<DateTime?>("PaymentDate")
-                        .HasColumnName("DATE_PAYMENT")
-                        .HasColumnType("date");
+                        .HasColumnName("DATE_PAYMENT");
 
                     b.Property<string>("PaymentType")
                         .HasColumnName("DOCUMENT_PAYMENT_TYPE");
@@ -272,12 +272,10 @@ namespace GP.SS.Database.Migrations
                         .HasColumnName("PROJECT_USER");
 
                     b.Property<DateTime?>("ReceiveDate")
-                        .HasColumnName("DATE_RECEIVE")
-                        .HasColumnType("date");
+                        .HasColumnName("DATE_RECEIVE");
 
                     b.Property<DateTime?>("SaleDate")
-                        .HasColumnName("DATE_SALE")
-                        .HasColumnType("date");
+                        .HasColumnName("DATE_SALE");
 
                     b.Property<decimal?>("Sum")
                         .HasColumnName("DOCUMENT_KWOTA_BRUTTO");

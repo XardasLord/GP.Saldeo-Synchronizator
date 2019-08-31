@@ -9,10 +9,10 @@ namespace GP.SS.Domain
         public string Rate { get; set; }
 
         [Column("NETTO")]
-        public string Netto { get; set; }
+        public decimal? Netto { get; set; }
 
         [Column("VAT")]
-        public string Vat { get; set; }
+        public decimal? Vat { get; set; }
 
         [ForeignKey("FK_Saldeo_DocumentVatRegistries_Saldeo_Documents_DocumentId")]
         [Column("DOCUMENT_ID")]

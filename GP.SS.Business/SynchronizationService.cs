@@ -147,6 +147,24 @@ namespace GP.SS.Business
                     entityDocument.ProjectCode = projectObject?.AdditionalCode;
                     entityDocument.ProjectUser = projectObject?.Code;
                     entityDocument.ProjectName = projectObject?.Description;
+                    entityDocument.ProjectCodeCopy = entityDocument.ProjectCode;
+
+                    var projectUserAfterSplit = entityDocument.ProjectUser?.Split(" ");
+                    if (projectUserAfterSplit != null)
+                    {
+                        // Workaround to remove code from the beginning
+                        entityDocument.ProjectUser = $"{projectUserAfterSplit[projectUserAfterSplit.Length - 2]} {projectUserAfterSplit[projectUserAfterSplit.Length - 1]}";
+                    }
+
+                    var categoryAfterSplit = entityDocument.Category?.Split("-");
+                    if (categoryAfterSplit != null)
+                    {
+                        // Workaround to split values
+                        entityDocument.CategoryKind = categoryAfterSplit[0];
+                        entityDocument.CategoryType = categoryAfterSplit.Length == 2 ? null : categoryAfterSplit[1];
+                        entityDocument.CategorySubType = categoryAfterSplit.Length == 4 ? categoryAfterSplit[2] : null;
+                        entityDocument.CategoryDescription = categoryAfterSplit[categoryAfterSplit.Length - 1];
+                    }
                 }
 
                 entityDocuments.ForEach(x => x.CompanyId = company.Id);

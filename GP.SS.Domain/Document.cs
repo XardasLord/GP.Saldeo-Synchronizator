@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GP.SS.Domain
 {
     [Table("SALDEO_DOCUMENTS")]
-    public class Document : DomainEntityBase
+    public class Document
     {
-        [Column("NUMER_DOK")]
+        [Key]
+        [Column("DOCUMENT_ID")]
+        public string Id { get; set; }
+
+        [Column("DOCUMENT_NUMBER")]
         public string Number { get; set; }
 
         [Column("DOCUMENT_TYPE_NAME")]
@@ -15,35 +21,50 @@ namespace GP.SS.Domain
         [Column("DOCUMENT_TYPE_SHORT_NAME")]
         public string DocumentTypeShortName { get; set; }
 
-        [Column("CATEGORY")]
+        [Column("COST_CATEGORY")]
         public string Category { get; set; }
 
-        [Column("DESCRIPTION")]
+        [Column("COST_CATEGORY_RODZAJ")]
+        public string CategoryKind { get; set; }
+
+        [Column("COST_CATEGORY_TYP")]
+        public string CategoryType { get; set; }
+
+        [Column("COST_CATEGORY_PODTYP")]
+        public string CategorySubType { get; set; }
+
+        [Column("COST_CATEGORY_OPIS")]
+        public string CategoryDescription { get; set; }
+
+        [Column("COST_DESCRIPTION")]
         public string Description { get; set; }
 
-        [Column("ISSUE_DATE")]
-        public string IssueDate { get; set; }
+        [Column("DATE_ISSUE", TypeName = "date")]
+        public DateTime? IssueDate { get; set; }
 
-        [Column("SALE_DATE")]
-        public string SaleDate { get; set; }
+        [Column("DATE_SALE", TypeName = "date")]
+        public DateTime? SaleDate { get; set; }
 
-        [Column("PAYMENT_DATE")]
-        public string PaymentDate { get; set; }
+        [Column("DATE_PAYMENT", TypeName = "date")]
+        public DateTime? PaymentDate { get; set; }
 
-        [Column("RECEIVE_DATE")]
-        public string ReceiveDate { get; set; }
+        [Column("DATE_RECEIVE", TypeName = "date")]
+        public DateTime? ReceiveDate { get; set; }
 
-        [Column("IS_DOCUMENT_PAID")]
+        [Column("DOCUMENT_IS_PAID")]
         public bool IsDocumentPaid { get; set; }
 
-        [Column("PAYMENT_TYPE")]
+        [Column("DOCUMENT_PAYMENT_TYPE")]
         public string PaymentType { get; set; }
 
-        [Column("SUM")]
-        public string Sum { get; set; }
+        [Column("DOCUMENT_KWOTA_BRUTTO")]
+        public decimal? Sum { get; set; }
 
         [Column("PROJECT_CODE")]
         public string ProjectCode { get; set; }
+
+        [Column("PROJECT_CODE_COPY")]
+        public string ProjectCodeCopy { get; set; }
 
         [Column("PROJECT_USER")]
         public string ProjectUser { get; set; }
@@ -79,6 +100,9 @@ namespace GP.SS.Domain
 
         [Column("CONTRACTOR_TELEPHONE")]
         public string ContractorTelephone { get; set; }
+
+        [Column("CONTRACTOR_TYP")]
+        public string ContractorType { get; set; }
 
         [ForeignKey("FK_Saldeo.Documents_Saldeo.Companies_CompanyId")]
         [Column("COMPANY_ID")]
