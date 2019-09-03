@@ -39,16 +39,16 @@ namespace GP.SS.Domain
         [Column("COST_DESCRIPTION")]
         public string Description { get; set; }
 
-        [Column("DATE_ISSUE", TypeName = "date")]
+        [Column("DATE_ISSUE", TypeName = "DATE")]
         public DateTime? IssueDate { get; set; }
 
-        [Column("DATE_SALE", TypeName = "date")]
+        [Column("DATE_SALE", TypeName = "DATE")]
         public DateTime? SaleDate { get; set; }
 
-        [Column("DATE_PAYMENT", TypeName = "date")]
+        [Column("DATE_PAYMENT", TypeName = "DATE")]
         public DateTime? PaymentDate { get; set; }
 
-        [Column("DATE_RECEIVE", TypeName = "date")]
+        [Column("DATE_RECEIVE", TypeName = "DATE")]
         public DateTime? ReceiveDate { get; set; }
 
         [Column("DOCUMENT_IS_PAID")]
