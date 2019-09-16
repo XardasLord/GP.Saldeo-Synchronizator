@@ -161,7 +161,7 @@ namespace GP.SS.Business
                     {
                         // Workaround to split values
                         entityDocument.CategoryKind = categoryAfterSplit[0];
-                        entityDocument.CategoryType = categoryAfterSplit.Length == 2 ? null : $"{categoryAfterSplit[0]}-{categoryAfterSplit[1]}";
+                        entityDocument.CategoryType = categoryAfterSplit.Length == 2 || categoryAfterSplit.Length == 1 ? null : $"{categoryAfterSplit[0]}-{categoryAfterSplit[1]}";
                         entityDocument.CategorySubType = categoryAfterSplit.Length == 4 ? $"{categoryAfterSplit[0]}-{categoryAfterSplit[1]}-{categoryAfterSplit[2]}" : null;
                         entityDocument.CategoryDescription = categoryAfterSplit[categoryAfterSplit.Length - 1];
                     }
