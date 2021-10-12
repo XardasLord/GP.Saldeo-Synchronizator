@@ -15,7 +15,7 @@
     <PackageReference Include="NLog" Version="4.6.6" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.19.0-beta4" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="4.5.0" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
